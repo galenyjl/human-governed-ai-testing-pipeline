@@ -100,7 +100,6 @@ Humans decide whether a failing test represents a test issue, environment issue,
 4. [Sample Feature File](examples/dashboard-access.feature)
 5. [AI Test Review Checklist](docs/ai-test-review-checklist.md)
 6. [Sample GitHub Actions Workflow](examples/github-actions/playwright-sample.yml)
-7. [Publishing Checklist](docs/publishing-checklist.md)
 
 ## Example Use Case
 
