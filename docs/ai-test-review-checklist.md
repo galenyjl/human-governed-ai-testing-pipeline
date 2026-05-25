@@ -1,0 +1,51 @@
+# AI-Generated Test Review Checklist
+
+Use this checklist before approving AI-assisted test changes.
+
+## Intent
+
+- [ ] The feature file matches the approved brief.
+- [ ] The test proves a business behavior, not just UI presence.
+- [ ] Assertions have not been softened to make the test pass.
+- [ ] Out-of-scope behavior has not been added by the generator.
+- [ ] Role and permission expectations are explicit.
+
+## Coverage
+
+- [ ] Smoke coverage validates the critical path only.
+- [ ] Regression coverage includes the required role matrix.
+- [ ] Cross-browser coverage is limited to representative rendering and JavaScript risk.
+- [ ] Negative or restricted-access behavior is covered where required.
+
+## Architecture
+
+- [ ] Feature files remain business-readable.
+- [ ] Step definitions orchestrate flow and assertions.
+- [ ] Page objects encapsulate locators and reusable interactions.
+- [ ] Environment access is centralized.
+- [ ] No secrets are hardcoded.
+- [ ] No direct locator logic leaks into high-level step definitions.
+
+## Stability
+
+- [ ] Test data is unique or safely reusable.
+- [ ] Tests can run in parallel without corrupting shared state.
+- [ ] Locators prefer roles, labels, test IDs, or stable app-specific markers.
+- [ ] Waits are based on application readiness signals.
+- [ ] Retries do not hide deterministic failures.
+
+## CI
+
+- [ ] The test can run headless.
+- [ ] The test does not depend on local `.env` values in CI.
+- [ ] Failure artifacts are available through trace, screenshot, video, or reporting.
+- [ ] CI failure classification is clear: test issue, environment issue, requirement mismatch, or product defect.
+
+## Self-Healing Boundaries
+
+- [ ] The healer only changed execution mechanics.
+- [ ] The healer did not remove or weaken assertions.
+- [ ] The healer did not change scenario intent.
+- [ ] Genuine product defects remain visible.
+- [ ] Requirement changes are cascaded through brief, plan, and implementation.
+
