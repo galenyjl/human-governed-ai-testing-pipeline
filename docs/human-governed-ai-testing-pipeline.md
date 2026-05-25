@@ -298,7 +298,7 @@ The rule is simple:
 
 ## Failure Classification
 
-When CI fails, classify the failure into one of three categories.
+When CI fails, classify the failure before changing the test.
 
 ### 1. Infrastructure or Environment Issue
 
@@ -312,7 +312,22 @@ Examples:
 
 The response is to fix the environment and rerun CI.
 
-### 2. Acceptance Criteria or Intent Mismatch
+### 2. Test Implementation Drift
+
+Sometimes the product behavior is still correct, but the test implementation has drifted.
+
+Examples:
+
+- A stable locator changed.
+- A component was restructured.
+- A timing assumption is no longer valid.
+- Fixture wiring no longer matches the runtime flow.
+
+This is the safe zone for a healer agent.
+
+The healer can repair execution mechanics, validate the fix, and hand the diff back for human review.
+
+### 3. Acceptance Criteria or Intent Mismatch
 
 Sometimes the product has changed because the requirement has changed, but the test intent has not been updated.
 
@@ -320,7 +335,7 @@ In that case, the right fix is not a silent test update.
 
 The story, brief, test plan, and implementation need to be reviewed and cascaded properly.
 
-### 3. Genuine Product Defect
+### 4. Genuine Product Defect
 
 Sometimes the test is correct and the product is wrong.
 
@@ -329,6 +344,40 @@ In that case, the test should remain a sentinel.
 The correct response is to raise a defect, link it to the failing scenario, and keep the signal visible until the product is fixed.
 
 Do not hide real product failures behind self-healing.
+
+### 5. Flaky / No Identifiable Root Cause
+
+Sometimes a scenario is still non-deterministic after bounded fix attempts, and no clear environment issue, intent mismatch, implementation drift, or product defect can be confirmed.
+
+That case needs its own path.
+
+The wrong response is to keep patching indefinitely.
+
+The safer response is:
+
+- Stop fix cycles.
+- Mark the scenario as under investigation.
+- Record the observed flakiness pattern.
+- Create an investigation task in the team's issue tracker.
+- Keep the failure visible until a stable root cause is found.
+
+This prevents the healer from forcing a low-confidence fix into the suite just to make the current run pass.
+
+## Healer Handoff
+
+A healer agent should not silently commit, push, or open a pull request.
+
+When it succeeds, it should hand control back to the developer:
+
+- List every file changed.
+- Explain the diagnosed root cause.
+- Summarize the fix.
+- Provide the validation command and result.
+- Leave the changes in the working branch for review.
+
+The developer then reviews the diff and decides whether to commit.
+
+If the fix fails or escalation applies, the developer can discard the changes and follow the appropriate failure path.
 
 ## Design Decisions
 
@@ -350,7 +399,13 @@ The healer only runs after CI failure.
 
 If behavior has changed, the pipeline escalates instead of silently rewriting the test.
 
-### 3. Humans Own Every Gate
+### 3. Healer Changes Are Reviewed Before Commit
+
+The healer can edit files, but it does not own the merge decision.
+
+Its output is a proposed diff, not an approved change.
+
+### 4. Humans Own Every Gate
 
 AI accelerates the work.
 
@@ -361,6 +416,24 @@ It does not approve the PR.
 It does not decide that a failing assertion should be weakened.
 
 Human review is not an optional ceremony. It is the control system.
+
+## Operational Constraints
+
+AI-assisted testing also needs practical limits.
+
+A production workflow should define:
+
+- Maximum fix attempts per scenario
+- Maximum retry count before declaring a scenario flaky
+- Maximum scope of files the healer may edit
+- Required validation command before handoff
+- When to create an investigation task
+- When to stop and ask for human decision
+- How token usage, runtime, and review cost are tracked
+
+These constraints are not bureaucracy.
+
+They prevent an automation system from spending unlimited time and money trying to repair a test whose root cause is unclear.
 
 ## Why This Matters
 

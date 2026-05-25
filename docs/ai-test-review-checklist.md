@@ -39,13 +39,17 @@ Use this checklist before approving AI-assisted test changes.
 - [ ] The test can run headless.
 - [ ] The test does not depend on local `.env` values in CI.
 - [ ] Failure artifacts are available through trace, screenshot, video, or reporting.
-- [ ] CI failure classification is clear: test issue, environment issue, requirement mismatch, or product defect.
+- [ ] CI failure classification is clear: implementation drift, environment issue, requirement mismatch, product defect, or flaky/no-root-cause.
 
 ## Self-Healing Boundaries
 
 - [ ] The healer only changed execution mechanics.
 - [ ] The healer did not remove or weaken assertions.
 - [ ] The healer did not change scenario intent.
+- [ ] The healer stopped after the agreed fix-attempt limit.
+- [ ] Flaky/no-root-cause failures were escalated for investigation instead of patched indefinitely.
+- [ ] Healer output was reviewed as a diff before commit.
+- [ ] The healer did not auto-commit, auto-push, or auto-create a pull request.
 - [ ] Genuine product defects remain visible.
 - [ ] Requirement changes are cascaded through brief, plan, and implementation.
 

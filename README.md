@@ -62,6 +62,9 @@ CI Execution
         |
         v
 Failure Recovery
+        |
+        v
+Human Handoff
 ```
 
 ## Design Principles
@@ -91,6 +94,12 @@ Humans review the brief.
 Humans review the PR.
 
 Humans decide whether a failing test represents a test issue, environment issue, requirement mismatch, or genuine product defect.
+
+### 5. Healer Output Is a Proposed Diff
+
+When a healer agent succeeds, it should leave reviewed changes in the working branch.
+
+It should not silently commit, push, or open a pull request.
 
 ## Recommended Reading Order
 
