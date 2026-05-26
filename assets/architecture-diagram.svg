@@ -133,8 +133,8 @@
     <rect x="620" y="1335" width="460" height="34" class="header" rx="14"/>
     <rect x="640" y="1344" width="70" height="18" class="badge" rx="5"/>
     <text x="675" y="1358" text-anchor="middle" class="badge-text">PHASE 6</text>
-    <text x="730" y="1358" class="phase-label">CONDITIONAL RECOVERY -- HEALER AGENT</text>
-    <text x="650" y="1398" class="text">Triggered only if CI/CD fails; not part of the happy path.</text>
+    <text x="730" y="1358" class="phase-label">HEALER AGENT RECOVERY</text>
+    <text x="650" y="1398" class="text">Conditional recovery: triggered only if CI/CD fails.</text>
     <text x="650" y="1423" class="text">Healer triages: env, implementation drift, intent mismatch,</text>
     <text x="650" y="1448" class="text">product defect, flaky/no-root-cause, or data/state sensitivity.</text>
     <text x="650" y="1473" class="text">Fixes execution only. Cannot change assertions or intent.</text>
