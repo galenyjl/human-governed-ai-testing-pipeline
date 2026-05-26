@@ -33,7 +33,7 @@
 
   <text x="600" y="62" text-anchor="middle" class="title">HUMAN-GOVERNED AI TESTING PIPELINE</text>
   <text x="600" y="92" text-anchor="middle" class="subtitle">AI GENERATES. HUMANS DECIDE. NO EXCEPTIONS.</text>
-  <text x="600" y="126" text-anchor="middle" class="caption">WORK ITEM -&gt; BRIEF -&gt; GENERATION -&gt; CI/CD -&gt; RECOVERY -&gt; HANDOFF</text>
+  <text x="600" y="126" text-anchor="middle" class="caption">WORK ITEM -&gt; BRIEF -&gt; GENERATION -&gt; CI/CD; HEALER RUNS ONLY ON CI FAILURE</text>
 
   <g style="--c:#3b82f6">
     <rect x="120" y="160" width="960" height="125" class="phase" stroke="#3b82f6"/>
@@ -95,7 +95,7 @@
     <rect x="620" y="920" width="430" height="105" class="card"/>
     <text x="640" y="950" class="card-title">Generator agent</text>
     <text x="640" y="978" class="text">Converts test plan into BDD, Playwright code,</text>
-    <text x="640" y="998" class="text">fixtures, page objects, and local validation.</text>
+    <text x="640" y="998" class="text">then self-corrects authoring-time code issues.</text>
   </g>
 
   <text x="600" y="1105" text-anchor="middle" class="arrow">v</text>
@@ -125,7 +125,7 @@
     <text x="150" y="1398" class="text">Runner: GitHub Actions, Azure DevOps, or another CI system.</text>
     <text x="150" y="1423" class="text">Optional: container execution, secret provider, cross-browser service.</text>
     <text x="150" y="1448" class="text">Artifacts: trace, screenshot, video, HTML report, CI logs.</text>
-    <text x="150" y="1473" class="text">Failure result triggers classification before any test mutation.</text>
+    <text x="150" y="1473" class="text">Pass: confidence signal. Fail: trigger conditional recovery.</text>
   </g>
 
   <g style="--c:#dc2626">
@@ -133,11 +133,11 @@
     <rect x="620" y="1335" width="460" height="34" class="header" rx="14"/>
     <rect x="640" y="1344" width="70" height="18" class="badge" rx="5"/>
     <text x="675" y="1358" text-anchor="middle" class="badge-text">PHASE 6</text>
-    <text x="730" y="1358" class="phase-label">FAILURE RECOVERY</text>
-    <text x="650" y="1398" class="text">Classify: environment, implementation drift, intent mismatch,</text>
-    <text x="650" y="1423" class="text">product defect, flaky/no-root-cause, or data/state sensitivity.</text>
-    <text x="650" y="1448" class="text">Healer fixes execution only. It cannot change assertions or intent.</text>
-    <text x="650" y="1473" class="text">Bounded attempts prevent indefinite patching.</text>
+    <text x="730" y="1358" class="phase-label">CONDITIONAL RECOVERY -- HEALER AGENT</text>
+    <text x="650" y="1398" class="text">Triggered only if CI/CD fails; not part of the happy path.</text>
+    <text x="650" y="1423" class="text">Healer triages: env, implementation drift, intent mismatch,</text>
+    <text x="650" y="1448" class="text">product defect, flaky/no-root-cause, or data/state sensitivity.</text>
+    <text x="650" y="1473" class="text">Fixes execution only. Cannot change assertions or intent.</text>
   </g>
 
   <text x="600" y="1548" text-anchor="middle" class="arrow">v</text>

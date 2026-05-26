@@ -221,6 +221,14 @@ But it should not change what the test is trying to prove.
 
 That boundary matters.
 
+This authoring-time self-correction is intentionally separate from CI failure recovery.
+
+The generator is cleaning up the tests it is currently producing before review.
+
+The healer handles failures after tests have entered the CI feedback loop.
+
+They are different mechanisms with different risk profiles.
+
 ## Two-Tier Local Validation
 
 Before code is submitted, the generated tests should pass through local validation.
@@ -317,6 +325,12 @@ Failures should have enough trace, screenshot, video, and reporting context to s
 
 ## Phase 6: Failure Recovery
 
+Phase 6 is not part of the normal happy path.
+
+It is conditional.
+
+It should only be triggered after CI/CD execution fails.
+
 Failure recovery is where many AI testing systems become risky.
 
 Self-healing sounds attractive, but it needs strict boundaries.
@@ -342,6 +356,14 @@ It should not:
 The rule is simple:
 
 > The healer can repair how the test runs. It cannot change what the test proves.
+
+This is different from generator self-correction.
+
+The generator self-corrects while producing new tests.
+
+The healer investigates existing tests that failed after CI feedback.
+
+That distinction matters because CI failures may represent product defects, requirement drift, environment issues, flaky behavior, or data sensitivity -- not just broken test code.
 
 ## Failure Classification
 

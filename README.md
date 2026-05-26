@@ -88,6 +88,12 @@ Self-healing tests are useful only when they repair execution problems.
 
 They become dangerous when they weaken assertions, remove coverage, or convert real product defects into passing tests.
 
+Generator self-correction and healer recovery are intentionally separate.
+
+The generator fixes authoring-time implementation issues before review.
+
+The healer is a conditional CI-failure recovery mechanism.
+
 ### 4. Human Gates Are Mandatory
 
 Humans review the brief.
