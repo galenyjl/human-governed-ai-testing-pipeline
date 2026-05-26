@@ -10,6 +10,12 @@ Validate that dashboard access and available actions are role-appropriate.
 
 The purpose is not to validate every dashboard visualization. The purpose is to validate access, visibility, and permitted actions across representative roles.
 
+## Prior Brief Context
+
+Relevant prior briefs indicate that permission management has historically been admin-only.
+
+Prior briefs are used as context only. The current signed-off acceptance criteria remain the authority for this work item.
+
 ## In Scope
 
 Roles:
@@ -46,6 +52,32 @@ Workflows:
 Use stable seed dashboards for read-only tests.
 
 Generated dashboards must use unique names and be cleaned up after the scenario.
+
+## Rejected Assumptions
+
+### Assumption
+
+Editor should be able to manage dashboard permissions.
+
+### Decision
+
+Rejected.
+
+### Reason
+
+The current acceptance criteria define permission management as admin-only.
+
+### Assumption
+
+Cross-browser coverage should repeat the full role matrix.
+
+### Decision
+
+Rejected.
+
+### Reason
+
+Cross-browser coverage is intended to validate rendering and JavaScript compatibility using a representative privileged role. Full role coverage belongs in regression.
 
 ## Human Review Notes
 

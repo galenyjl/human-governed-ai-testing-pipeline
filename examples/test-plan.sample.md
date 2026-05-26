@@ -64,3 +64,19 @@ Cross-browser testing validates rendering and JavaScript compatibility. It does 
 - Role permissions must be clarified before generation.
 - Self-healing must not change authorization expectations.
 
+## Data / State Sensitivity
+
+Dashboard creation scenarios must use unique generated names.
+
+Read-only scenarios should use stable reference dashboards that are not modified by test execution.
+
+If a scenario fails because the selected data produces an unexpected permission or visibility result, preserve the assertion and change the data condition only after confirming the intended behavior remains the same.
+
+## Success Criteria
+
+- Smoke scenario validates the critical path without expanding scope.
+- Regression scenarios cover the agreed role matrix.
+- Generated tests are accepted without changing business intent.
+- Any flaky/no-root-cause failure is escalated for investigation instead of patched indefinitely.
+- Any data-dependent false positive is documented with the data condition that caused it.
+

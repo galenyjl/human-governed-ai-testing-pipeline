@@ -1,6 +1,6 @@
 # Human-Governed AI Testing Pipeline
 
-## From Azure DevOps Story to Playwright Tests
+## From Work Item to Playwright Tests
 
 AI can generate tests quickly.
 
@@ -16,7 +16,7 @@ The principle is simple:
 
 > AI generates. Humans decide. No exceptions.
 
-This article describes a pipeline for thinking about AI-assisted UI test automation, from an Azure DevOps story through to Playwright BDD tests, CI execution, and failure recovery.
+This article describes a pipeline for thinking about AI-assisted UI test automation, from a product work item through to Playwright BDD tests, CI execution, and failure recovery.
 
 It is not a demo-only workflow where an agent explores the UI and invents tests. It is a governed engineering workflow where AI accelerates planning and implementation, while humans remain accountable for test intent.
 
@@ -64,7 +64,9 @@ AI is allowed to accelerate the work downstream, but it is not allowed to reinte
 
 ## Phase 1: Requirements / Story
 
-The starting point is a work item such as an Azure DevOps user story with signed-off acceptance criteria.
+The starting point is a product work item with signed-off acceptance criteria.
+
+That work item could live in Azure DevOps, Jira, Linear, GitHub Issues, or another planning system.
 
 The acceptance criteria define the business behavior. They are the source of truth for what the system should do.
 
@@ -80,7 +82,7 @@ No test pipeline can fix that downstream.
 
 Before generating tests, use a brief as an intermediate contract.
 
-The brief extracts the test intent from the story and makes it explicit:
+The brief extracts the test intent from the work item and makes it explicit:
 
 - Business behavior under test
 - In-scope roles
@@ -90,13 +92,27 @@ The brief extracts the test intent from the story and makes it explicit:
 - Out-of-scope behavior
 - Known ambiguity or missing acceptance criteria
 
+The brief should also review relevant prior approved briefs where they exist.
+
+Prior briefs can help detect:
+
+- Terminology drift
+- Role-matrix inconsistency
+- Repeated ambiguity
+- Known product constraints
+- Previously rejected assumptions
+
+Prior briefs provide context, not authority.
+
+The current approved brief remains the contract for the current work item.
+
 This brief is reviewed by a human before it becomes the input for test planning.
 
 The brief is important because it separates requirement interpretation from test implementation.
 
 Once approved, the brief becomes the contract.
 
-Downstream agents should read the brief, not the original story and not the UI, when deciding what the test means.
+Downstream agents should read the brief, not the original work item and not the UI, when deciding what the test means.
 
 This prevents a subtle but dangerous failure mode: an agent quietly changing the test intent while generating or repairing code.
 
@@ -112,10 +128,10 @@ AI can help identify ambiguity, but it should not resolve business ambiguity on 
 
 Examples of issues that should block handoff:
 
-- The story does not specify which roles are in scope.
+- The work item does not specify which roles are in scope.
 - The expected permission behavior is unclear.
 - The acceptance criteria describe a workflow but not the expected result.
-- The system has multiple identity paths, but the story does not say which one matters.
+- The system has multiple identity paths, but the work item does not say which one matters.
 
 When those gaps exist, generating tests only creates a false sense of progress.
 
@@ -125,7 +141,7 @@ After review, the approved brief becomes the single source of truth for the test
 
 This is the most important governance decision in the whole design.
 
-The planner should not reinterpret the Azure DevOps story.
+The planner should not reinterpret the original work item.
 
 The generator should not expand scope because it found extra UI elements.
 
@@ -134,6 +150,31 @@ The healer should not weaken an assertion because a test is failing.
 The approved brief locks intent.
 
 Everything downstream is implementation.
+
+## Rejected Assumptions Log
+
+Human review should not only approve what is correct.
+
+It should also record what was rejected.
+
+This can be a small section in the brief:
+
+```text
+Rejected assumption:
+Editors should be able to manage dashboard permissions.
+
+Decision:
+Rejected.
+
+Reason:
+The current acceptance criteria define permission management as admin-only.
+```
+
+This is not "AI memory" in a vague sense.
+
+It is an explicit feedback artifact that future prompts, reviewers, and agents can inspect.
+
+The goal is to prevent the same invalid assumption from reappearing in generated plans or tests.
 
 ## Phase 3: Planning and Generation
 
@@ -333,7 +374,7 @@ Sometimes the product has changed because the requirement has changed, but the t
 
 In that case, the right fix is not a silent test update.
 
-The story, brief, test plan, and implementation need to be reviewed and cascaded properly.
+The work item, brief, test plan, and implementation need to be reviewed and cascaded properly.
 
 ### 4. Genuine Product Defect
 
@@ -363,6 +404,27 @@ The safer response is:
 
 This prevents the healer from forcing a low-confidence fix into the suite just to make the current run pass.
 
+### 6. Data / State Sensitivity
+
+Sometimes the test logic is correct and the product behavior is correct, but the selected data or state makes the result unreliable.
+
+Examples:
+
+- Shared seed data was modified by another scenario.
+- A generated entity was not unique enough for parallel execution.
+- A dashboard, report, or record depends on time-sensitive data.
+- A permission check is correct, but the selected account has unexpected inherited access.
+
+This is not the same as changing the assertion.
+
+The safer response is to vary or isolate the data while preserving the intended behavior:
+
+- Use unique generated names.
+- Reset or seed state explicitly.
+- Choose stable reference data.
+- Record the data condition that caused the false positive.
+- Keep the assertion unchanged until the data condition is understood.
+
 ## Healer Handoff
 
 A healer agent should not silently commit, push, or open a pull request.
@@ -387,7 +449,7 @@ There are three design decisions that make this pipeline work.
 
 The approved brief locks test intent.
 
-Agents downstream read the brief, not the original story and not the UI.
+Agents downstream read the brief, not the original work item and not the UI.
 
 This prevents scope drift.
 
@@ -434,6 +496,24 @@ A production workflow should define:
 These constraints are not bureaucracy.
 
 They prevent an automation system from spending unlimited time and money trying to repair a test whose root cause is unclear.
+
+## Success Criteria
+
+A pilot should also define how success will be measured.
+
+Useful signals include:
+
+- Percentage of generated tests accepted without major rewrite
+- Average human review time per generated scenario
+- Number of rejected assumptions caught before generation
+- Failure classification accuracy during CI recovery
+- Flaky rate after generated tests are merged
+- Cost or token usage per accepted scenario
+- Number of product defects correctly preserved as failing sentinels
+
+The goal is not to prove that AI can write code.
+
+The goal is to prove that AI can improve delivery speed without reducing trust in the test suite.
 
 ## Why This Matters
 

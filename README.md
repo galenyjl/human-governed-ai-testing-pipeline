@@ -31,6 +31,7 @@ It includes:
 - A sample Playwright configuration
 - A sample CI workflow template
 - A reusable checklist for reviewing AI-generated tests
+- Guidance for rejected assumptions, data sensitivity, healer handoff, and success criteria
 
 The examples are intentionally generic and product-neutral. They are designed to show the workflow, not expose any private application logic.
 
@@ -73,7 +74,7 @@ Human Handoff
 
 The approved brief locks test intent.
 
-Downstream agents should read the approved brief, not reinterpret the original story or explore the UI to infer business meaning.
+Downstream agents should read the approved brief, not reinterpret the original work item or explore the UI to infer business meaning.
 
 ### 2. AI Accelerates Implementation, Not Accountability
 
@@ -100,6 +101,12 @@ Humans decide whether a failing test represents a test issue, environment issue,
 When a healer agent succeeds, it should leave reviewed changes in the working branch.
 
 It should not silently commit, push, or open a pull request.
+
+### 6. Operational Limits Matter
+
+AI-assisted workflows need explicit limits for fix attempts, flaky retries, data sensitivity, and review cost.
+
+Without limits, automation can spend too much time trying to repair failures whose root cause is unclear.
 
 ## Recommended Reading Order
 

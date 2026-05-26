@@ -9,6 +9,9 @@ Use this checklist before approving AI-assisted test changes.
 - [ ] Assertions have not been softened to make the test pass.
 - [ ] Out-of-scope behavior has not been added by the generator.
 - [ ] Role and permission expectations are explicit.
+- [ ] Relevant prior briefs were checked for terminology drift, repeated ambiguity, or role-matrix inconsistency.
+- [ ] Prior briefs were used as context, not as authority over the current approved brief.
+- [ ] Rejected assumptions are recorded so they are not regenerated later.
 
 ## Coverage
 
@@ -33,6 +36,7 @@ Use this checklist before approving AI-assisted test changes.
 - [ ] Locators prefer roles, labels, test IDs, or stable app-specific markers.
 - [ ] Waits are based on application readiness signals.
 - [ ] Retries do not hide deterministic failures.
+- [ ] Data-dependent false positives are handled by isolating or varying data, not by changing assertions prematurely.
 
 ## CI
 
@@ -40,6 +44,7 @@ Use this checklist before approving AI-assisted test changes.
 - [ ] The test does not depend on local `.env` values in CI.
 - [ ] Failure artifacts are available through trace, screenshot, video, or reporting.
 - [ ] CI failure classification is clear: implementation drift, environment issue, requirement mismatch, product defect, or flaky/no-root-cause.
+- [ ] Data/state sensitivity is considered before changing test intent or assertions.
 
 ## Self-Healing Boundaries
 
@@ -52,4 +57,11 @@ Use this checklist before approving AI-assisted test changes.
 - [ ] The healer did not auto-commit, auto-push, or auto-create a pull request.
 - [ ] Genuine product defects remain visible.
 - [ ] Requirement changes are cascaded through brief, plan, and implementation.
+
+## Success Criteria
+
+- [ ] Generated tests can be reviewed without major rewrite.
+- [ ] Human review time is tracked or estimated.
+- [ ] Flaky rate is monitored after generated tests are merged.
+- [ ] Token/runtime/review cost is visible enough to decide whether the workflow is worth scaling.
 
