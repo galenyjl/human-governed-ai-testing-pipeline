@@ -16,7 +16,7 @@ This project documents a governed approach:
 
 > AI generates. Humans decide. No exceptions.
 
-![Human-Governed AI Testing Pipeline](assets/architecture-diagram.png)
+![Human-Governed AI Testing Pipeline](assets/architecture-diagram.svg)
 
 ## What This Repository Contains
 
