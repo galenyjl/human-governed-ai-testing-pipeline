@@ -108,6 +108,27 @@ AI-assisted workflows need explicit limits for fix attempts, flaky retries, data
 
 Without limits, automation can spend too much time trying to repair failures whose root cause is unclear.
 
+## Implementation Options
+
+The pipeline is intentionally tool-neutral, but it maps well to real enterprise test infrastructure.
+
+Example implementation choices:
+
+- Work item system: Azure DevOps, Jira, Linear, GitHub Issues
+- Test framework: Playwright, Playwright BDD, Cucumber-style BDD
+- CI runner: GitHub Actions, Azure DevOps, GitLab CI, Jenkins
+- Container execution: Docker, Kubernetes, AKS, EKS, GKE
+- Cross-browser validation: BrowserStack, Sauce Labs, Playwright browser projects
+- Secret management: GitHub Actions secrets, Azure Key Vault, AWS Secrets Manager, HashiCorp Vault
+- Reporting: Playwright HTML report, Allure, ReportPortal, CI artifacts
+- Observability: CI logs, traces, screenshots, videos, browser console logs, network logs
+
+The core workflow should remain the same regardless of tool choice:
+
+```text
+Human-approved intent -> AI-assisted implementation -> CI feedback -> bounded recovery -> human handoff
+```
+
 ## Recommended Reading Order
 
 1. [Architecture Article](docs/human-governed-ai-testing-pipeline.md)

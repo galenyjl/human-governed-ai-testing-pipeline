@@ -45,6 +45,8 @@ Use this checklist before approving AI-assisted test changes.
 - [ ] Failure artifacts are available through trace, screenshot, video, or reporting.
 - [ ] CI failure classification is clear: implementation drift, environment issue, requirement mismatch, product defect, or flaky/no-root-cause.
 - [ ] Data/state sensitivity is considered before changing test intent or assertions.
+- [ ] Infrastructure choices are explicit: CI runner, container strategy, secret manager, reporting, and cross-browser provider.
+- [ ] Tool-specific implementation details do not change the human-governed workflow.
 
 ## Self-Healing Boundaries
 

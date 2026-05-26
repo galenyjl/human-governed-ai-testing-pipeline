@@ -291,13 +291,19 @@ A realistic pipeline may include:
 
 - Framework validation
 - BDD generation
-- Docker image build
-- Container registry push
-- Kubernetes job execution
-- Secret retrieval through cloud identity
+- Containerized execution through Docker or Kubernetes
+- Container registry push where tests run as packaged jobs
+- Secret retrieval through a platform secret manager
 - HTML report retention
-- Report portal integration
-- Cross-browser smoke tests through a service such as BrowserStack
+- Test reporting through Playwright HTML report, Allure, ReportPortal, or CI artifacts
+- Cross-browser smoke tests through BrowserStack, Sauce Labs, or Playwright browser projects
+
+Common implementation choices include:
+
+- CI runner: GitHub Actions, Azure DevOps, GitLab CI, or Jenkins
+- Container execution: Docker, Kubernetes, AKS, EKS, or GKE
+- Secret management: GitHub Actions secrets, Azure Key Vault, AWS Secrets Manager, or HashiCorp Vault
+- Cross-browser validation: BrowserStack, Sauce Labs, or a Playwright-managed browser matrix
 
 The important principle is that CI should be deterministic and auditable.
 
